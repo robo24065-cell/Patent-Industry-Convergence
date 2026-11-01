@@ -89,11 +89,11 @@ function makeTable(rowsTxt) {
     margins: { top: 40, bottom: 40, left: 80, right: 80 },
     children: [new Paragraph({ children: runs(txt || '', { size: SMALL, bold: isHead }), alignment: AlignmentType.LEFT, spacing: { after: 0, line: 240 } })],
   });
-  const rows = [new TableRow({ tableHeader: true, children: header.map((c, i) => mkCell(c, i, true)) })];
+  const rows = [new TableRow({ tableHeader: true, cantSplit: true, children: header.map((c, i) => mkCell(c, i, true)) })];
   for (const r of body) {
     const cells = [];
     for (let i = 0; i < ncol; i++) cells.push(mkCell(r[i] || '', i, false));
-    rows.push(new TableRow({ children: cells }));
+    rows.push(new TableRow({ cantSplit: true, children: cells }));
   }
   return new Table({ width: { size: CONTENT_W, type: WidthType.DXA }, columnWidths: widths, rows });
 }
