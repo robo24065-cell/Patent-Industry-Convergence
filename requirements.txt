@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+# 분석 코드가 쓰는 제3자 Python 패키지 (표준 라이브러리 제외)
+# (첫 줄 coding 표시는 지우지 않는다: 한국어 Windows(cp949)에서 pip가 이 파일을 UTF-8로 읽게 한다)
+#
+# 버전 미고정, 팀 PC 환경 기준.
+# - 줄 끝 주석의 '팀 PC x.y.z'는 2026-11-02 팀 PC(Windows 10, Python 3.13.2)에 설치돼 있던 판을
+#   importlib.metadata로 읽은 참고값이다. 분석 당시(2026-08~10)에 쓴 판과 같은지는 확인하지 않았다.
+# - 만든 방법: 저장소의 .py 2,354개를 ast로 읽어 import 최상위 이름을 모으고, 표준 라이브러리
+#   (sys.stdlib_module_names)와 저장소 안 모듈 이름을 뺐다. '파일 n'은 그 패키지를 import하는 파일 수.
+# - 데이터가 저장소에 없으므로 설치해도 클론만으로는 재현되지 않는다(README.md 참고).
+# - 저장소에 없는 로컬 모듈: collect_registry (팀 PC 수집파이프라인 폴더, 키가 들어 있어 제외 —
+#   분석/ 최상위의 probe_*·diag_* 일부가 import). Node.js 쪽 의존성은 docs/CODE_GUIDE.md 참고.
+
+pandas          # 파일 1,618 · 팀 PC 2.2.3
+numpy           # 파일 1,409 · 팀 PC 2.2.5
+scikit-learn    # import sklearn · 파일 407 · 팀 PC 1.9.0
+duckdb          # 파일 358 · 팀 PC 1.5.5
+scipy           # 파일 338 · 팀 PC 1.17.1
+xgboost         # 파일 149 · 팀 PC 3.2.0
+pyarrow         # 파일 96, pandas read_parquet/to_parquet 엔진 · 팀 PC 25.0.1
+statsmodels     # 파일 64 · 팀 PC 0.14.6
+PyMuPDF         # import fitz · 파일 40 (보고서 PDF 확인, 검증 루프) · 팀 PC 1.27.2.3
+matplotlib      # 파일 18 (보고서 그림 등) · 팀 PC 3.10.1
+openpyxl        # 파일 10, pandas read_excel(.xlsx) 엔진 · 팀 PC 3.1.5
+Pillow          # import PIL · 파일 7 · 팀 PC 11.2.1
+requests        # 파일 7 (외부데이터 수집) · 팀 PC 2.33.1
+python-docx     # import docx · 파일 5 (검증 루프의 docx 대조) · 팀 PC 1.2.0
+pypdf           # 파일 2 · 팀 PC 6.13.2
+threadpoolctl   # 파일 1 (scikit-learn 설치 때 함께 설치됨) · 팀 PC 3.6.0
+xlrd            # 파일 1 + pandas read_excel(engine='xlrd', .xls) · 팀 PC 2.0.2
+
+# import 문에는 없지만 pandas가 내부에서 부르는 것
+lxml            # pandas.read_html (KRX KIND 목록 파싱 3개 파일) · 팀 PC 6.1.0
+
+# 선택: 없어도 동작한다
+# psutil        # 메모리 사용량 표시용, try/except로 감싸 있음(파일 2) · 팀 PC 미설치
