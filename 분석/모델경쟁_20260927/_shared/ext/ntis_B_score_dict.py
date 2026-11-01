@@ -1,0 +1,10 @@
+# b2 사전 점수 사전계산(실행시간 분할용): ntis_B_work/ntis_B_dict_scores.npy (과제 raw 2002-2024 순서)
+import sys, json, numpy as np, pandas as pd, ntis_B_common as c, ntis_B_ksic_dict as kd
+defs = json.load(open(c.BASE + r"\공모전데이터\외부데이터\KSIC해설\ksic50_definitions.json", encoding="utf-8"))
+raw = pd.read_parquet(c.EXT + r"\ntis_project_raw.parquet", columns=["pjt_no", "year", "title_ko", "kw_ko"])
+raw = raw[raw.year.between(2002, 2024)].reset_index(drop=True)
+T = kd.build_terms(defs)
+S = kd.score(raw.title_ko.fillna("") + " " + raw.kw_ko.fillna(""), T, [d["code"] for d in defs])
+np.save(c.WORK + r"\ntis_B_dict_scores.npy", S.astype(np.float32))
+raw[["pjt_no"]].to_parquet(c.WORK + r"\ntis_B_dict_scores_index.parquet", index=False)
+print("saved", S.shape)

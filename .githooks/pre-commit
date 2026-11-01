@@ -1,0 +1,2 @@
+#!/bin/sh
+python "$(git rev-parse --show-toplevel)/.githooks/guard.py" --staged

@@ -1,0 +1,6 @@
+BASE = r"C:\Users\PC\Downloads\특허-산업 융합데이터 활용 아이디어 공모전"
+AN = BASE + r"\분석"
+MC = AN + r"\모델경쟁_20260927"
+EXT = MC + r"\_shared\ext"
+LOOP = AN + r"\검증루프_20261012"
+OUT = LOOP + r"\C03\C03-T3"
